@@ -2,12 +2,15 @@ package com.example.calculadora;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnSumar;
     Button btnRestar;
@@ -34,12 +37,47 @@ public class MainActivity extends AppCompatActivity {
         inputNumero2 = findViewById(R.id.numero2);
 
         //Configurar los metodos listener para los botones
-        btnSumar.setOnClickListener(view -> sumar());
-        btnRestar.setOnClickListener(view -> restar());
-        btnMultiplicar.setOnClickListener(view -> multiplicar());
-        btnDividir.setOnClickListener(view -> dividir());
-        btnLimpiar.setOnClickListener(view -> limpiar());
+        btnSumar.setOnClickListener(this);
+        btnRestar.setOnClickListener(this);
+        btnMultiplicar.setOnClickListener(this);
+        btnDividir.setOnClickListener(this);
+        btnLimpiar.setOnClickListener(this);
 
+    }
+
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        String input1 = inputNumero1.getText().toString();
+        String input2 = inputNumero2.getText().toString();
+        if (input1.equals("") || input2.equals("")){
+            Toast.makeText(this, "Numeros vacios", Toast.LENGTH_LONG).show();
+            return;
+        }
+        int numero1 = Integer.parseInt(input1);
+        int numero2 = Integer.parseInt(input2);
+        double resultado = 0;
+        switch (view.getId()){
+            case R.id.limpiar:
+                limpiar();
+                break;
+            case R.id.sumar:
+                resultado = sumar(numero1, numero2);
+                break;
+            case R.id.restar:
+                resultado = restar(numero1, numero2);
+                break;
+            case R.id.multiplicar:
+                resultado = multiplicar(numero1, numero2);
+                break;
+            case R.id.dividir:
+                resultado = dividir(numero1, numero2);
+                break;
+            default:
+                System.out.println("No existe");
+        }
+        textRespuesta.setText(String.valueOf(resultado));
     }
 
     private void limpiar() {
@@ -48,35 +86,23 @@ public class MainActivity extends AppCompatActivity {
         textRespuesta.setText("0");
     }
 
-    public void sumar(){
-        int numero1 = Integer.parseInt(inputNumero1.getText().toString());
-        int numero2 = Integer.parseInt(inputNumero2.getText().toString());
-        int resultado = numero1 + numero2;
-        textRespuesta.setText(String.valueOf(resultado));
+    public int sumar(int numero1, int numero2){
+        return numero1 + numero2;
     }
 
-    public void restar(){
-        int numero1 = Integer.parseInt(inputNumero1.getText().toString());
-        int numero2 = Integer.parseInt(inputNumero2.getText().toString());
-        int resultado = numero1 - numero2;
-        textRespuesta.setText(String.valueOf(resultado));
+    public int restar(int numero1, int numero2){
+        return numero1 - numero2;
     }
 
-    public void multiplicar(){
-        int numero1 = Integer.parseInt(inputNumero1.getText().toString());
-        int numero2 = Integer.parseInt(inputNumero2.getText().toString());
-        int resultado = numero1 * numero2;
-        textRespuesta.setText(String.valueOf(resultado));
+    public int multiplicar(int numero1, int numero2){
+        return numero1 * numero2;
     }
 
-    public void dividir(){
-        double numero1 = Double.parseDouble(inputNumero1.getText().toString());
-        double numero2 = Double.parseDouble(inputNumero2.getText().toString());
+    public Double dividir(int numero1, int numero2){
         if (numero2 == 0){
-            textRespuesta.setText("NO PUEDE DIVIDIR ENTRE 0");
-            return;
+            Toast.makeText(this, "NO PUEDE DIVIDIR ENTRE 0", Toast.LENGTH_LONG).show();
+            return null;
         }
-        double resultado = numero1 / numero2;
-        textRespuesta.setText(String.valueOf(resultado));
+        return (double) numero1 / numero2;
     }
 }
