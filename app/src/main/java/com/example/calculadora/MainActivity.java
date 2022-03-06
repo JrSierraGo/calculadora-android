@@ -49,15 +49,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
+        //Se capturan los valores ingresados por el usuario
         String input1 = inputNumero1.getText().toString();
         String input2 = inputNumero2.getText().toString();
+
+        //Se valida que ninguno de los campos sean vacios o de lo contrario retorna mensaje al usuario
         if (input1.equals("") || input2.equals("")){
             Toast.makeText(this, "Numeros vacios", Toast.LENGTH_LONG).show();
             return;
         }
+
+        //Se convierten los datos capturados a numeros
         int numero1 = Integer.parseInt(input1);
         int numero2 = Integer.parseInt(input2);
+
+        //Se inicializa el resultado en 0
         double resultado = 0;
+
+        //Se valida que botón fue pulsado para enviar al metodo correspondiente
         switch (view.getId()){
             case R.id.limpiar:
                 limpiar();
@@ -77,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 System.out.println("No existe");
         }
+        //El resultado obtenido se establece en el textView de Respuesta
         textRespuesta.setText(String.valueOf(resultado));
     }
 
@@ -99,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public Double dividir(int numero1, int numero2){
+        //Se comprueba que el divisor no sea 0 de lo contrario se retorna un mensaje al usuario
         if (numero2 == 0){
             Toast.makeText(this, "NO PUEDE DIVIDIR ENTRE 0", Toast.LENGTH_LONG).show();
             return null;
