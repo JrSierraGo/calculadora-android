@@ -108,11 +108,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return numero1 * numero2;
     }
 
-    public Double dividir(int numero1, int numero2){
+    public double dividir(int numero1, int numero2){
         //Se comprueba que el divisor no sea 0 de lo contrario se retorna un mensaje al usuario
         if (numero2 == 0){
             Toast.makeText(this, "NO PUEDE DIVIDIR ENTRE 0", Toast.LENGTH_LONG).show();
-            return null;
+            return 0;
         }
         return (double) numero1 / numero2;
     }
